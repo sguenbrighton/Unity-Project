@@ -5,6 +5,11 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 
+    //
+    public Animator animator;
+    public float temp = 0;
+    //
+
     public float gravity;
     public Vector2 velocity;
     public float maxXVelocity = 100;
@@ -39,6 +44,11 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        //
+        animator.SetFloat("speed", velocity.x);
+        animator.SetBool("grounded", isGrounded);
+        //
+
         Vector2 pos = transform.position;
         float groundDistance = Mathf.Abs(pos.y - groundHeight);
 
@@ -84,6 +94,18 @@ public class Player : MonoBehaviour
             velocity.x = 0;
 
         }
+
+        //
+        if (temp > pos.y)
+        {
+            animator.SetBool("fallingdownwards", true);
+        }
+        else
+        {
+            animator.SetBool("fallingdownwards", false);
+        }
+        temp = pos.y;
+        //
 
         if (!isGrounded)
         {
